@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Calc</name>
+    </assembly>
+    <members>
+        <member name="T:Calc.CCalcException">
+            <summary>
+            CCalculator exception
+            </summary>
+        </member>
+        <member name="T:Calc.MyForm">
+            <summary>
+            Calculator form implementation
+            </summary>
+        </member>
+        <member name="M:Calc.MyForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.</summary>
+        </member>
+        <member name="M:Calc.MyForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Calc.MyForm.Main">
+            <summary>
+            The main entry point for the application.</summary>
+        </member>
+        <member name="T:Calc.CCalculator">
+            <summary>Calculation logic implementation</summary>
+        </member>
+        <member name="F:Calc.CCalculator.m_scPart">
+            <summary>
+            partitionized user expression</summary>
+        </member>
+        <member name="F:Calc.CCalculator.m_nvcReg">
+            <summary>
+            default `ans` and user defined registers</summary>
+        </member>
+        <member name="F:Calc.CCalculator.m_sCMD">
+            <summary>arrary of reserved commands that are executed
+            before and inplace of calculation</summary>
+        </member>
+        <member name="F:Calc.CCalculator.m_sAO">
+            <summary>array of reserved arithmetic operations, see AO</summary>
+        </member>
+        <member name="M:Calc.CCalculator.the(Calc.CCalculator.AO)">
+            <summary>accessor of array of operations</summary>
+            <param name="_AO">enumerator of operation</param>
+            <returns>string equivalent to enumerator</returns>
+        </member>
+        <member name="M:Calc.CCalculator.the(Calc.CCalculator.CMD)">
+            <summary>accessor of array of commands/registers</summary>
+            <param name="_AO">enumerator of command</param>
+            <returns>string equivalent to enumerator</returns>
+        </member>
+        <member name="M:Calc.CCalculator.#ctor">
+            <summary>
+            Init reserved registers and constants, order of declaration are
+            extreamly important: by register's string length descending!</summary>
+        </member>
+        <member name="M:Calc.CCalculator.Parts_Solve(System.Collections.Specialized.StringCollection)">
+            <summary>
+            Solve partitionized expression.
+            Assume what:
+             - any registers replaced by value (ReplaceRegisters)
+             - created valid partition (Parse_to_Partitions)
+             - no braces conflicts (Parts_BracesValidation),
+             - no multiple negative operands in (Parts_SolveNegative)
+            may fall in recursion if braces encountered, end condition is
+            if one part is left in sub partition and is a number.</summary>
+            <param name="_scPart">valid partition</param>
+            <returns>answer</returns>
+        </member>
+        <member name="M:Calc.CCalculator.Parts_BracesValidation">
+            <summary>validate braces in partitionized expression
+            or throw on error
+            </summary>
+        </member>
+        <member name="M:Calc.CCalculator.ReplaceRegisters(System.String@)">
+            <summary>replace Registers identificators (like 'ans')
+            by they value</summary>
+            <param name="_str">string to search for registers</param>
+            <returns>replaced string</returns>
+        </member>
+        <member name="M:Calc.CCalculator.Parse_to_Partitions(System.String)">
+            <summary>separate _sExpr to numbers and knowed arithmetic
+            operators. result stored in StringCollection m_scPart.
+            any other symbol is throw an CCalcException.</summary>
+            <param name="_sExpr">string to engage</param>
+        </member>
+        <member name="M:Calc.CCalculator.IsNumber(System.String)">
+            <summary>Define if given string is one of an integer,
+            float or exponent number. dot '.' is treats as part
+            of the number (may throw CCalcException if
+            multiple dot found), exponent known as 1e2 or 1e-2 or 1e+2</summary>
+            <param name="_num">string to engage</param>
+            <returns>true if _num is a number, false otherwise</returns>
+        </member>
+        <member name="M:Calc.CCalculator.IsAO(System.String)">
+            <summary>check if expression is one of arithmetic operations
+            predefined in m_sAO array</summary>
+            <param name="_sAO">string to engage</param>
+            <returns>true if `_sAO` is almost an operator or indeed
+            the operator, false otherwise</returns>
+        </member>
+        <member name="M:Calc.CCalculator.IsCommand(System.String)">
+            <summary>check if expression is a command as predefined
+            in `m_sCMD`</summary>
+            <param name="_sCmd">user expression here as a command</param>
+            <returns>true if _sCmd is a known command, false otherwise</returns>
+        </member>
+        <member name="M:Calc.CCalculator.RunCommand(System.String)">
+            <summary>execute predefined command on Application--Calculator
+            level. Command specified in `m_sCMD`</summary>
+            <param name="_sCmd">command name</param>
+            <returns>empty string on application level command or
+            result of the specific command</returns>
+        </member>
+        <member name="P:Calc.CCalculator.ANS_REG">
+            <summary>
+            default answer register access property</summary>
+        </member>
+        <member name="P:Calc.CCalculator.PI_REG">
+            <summary>
+            PI constant register</summary>
+        </member>
+        <member name="P:Calc.CCalculator.E_REG">
+            <summary>
+            E natural logariphm base constant register</summary>
+        </member>
+        <member name="P:Calc.CCalculator.TRUE_REG">
+            <summary>
+            TRUE logic, constant register</summary>
+        </member>
+        <member name="P:Calc.CCalculator.FALSE_REG">
+            <summary>
+            FALSE logic, constant register</summary>
+        </member>
+        <member name="P:Calc.CCalculator.ClearScreenCMD">
+            <summary>
+            Clear-screen command on application level, parsed to
+            CCalculator.Solve caller via thrown CCalcException
+            message. property is readonly
+            </summary>
+        </member>
+        <member name="T:Calc.CCalculator.CMD">
+            <summary>
+            enumerator of reserved commands</summary>
+        </member>
+        <member name="T:Calc.CCalculator.AO">
+            <summary>enumerator of Arithmetic Operations. Enumeration
+            number grows from low priority witch is 0 to higher</summary>
+        </member>
+        <member name="T:Calc.CParseNumber">
+            <summary>Number parser, validator class</summary>
+        </member>
+    </members>
+</doc>
